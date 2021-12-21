@@ -2,6 +2,8 @@ extends Node2D
 
 enum BlockState {COVERED, PRESSED, FLAGGED}
 var state = BlockState.COVERED
+var sprite_size = 256
+var has_bomb: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,6 +16,8 @@ func _on_Control_gui_input(event):
 		BlockState.COVERED:
 			if event.is_action_pressed("left_click"):
 				$Cover.hide()
+				if has_bomb:
+					$Bomb.show()
 				state = BlockState.PRESSED
 			if event.is_action_pressed("right_click"):
 				$Flag.show()

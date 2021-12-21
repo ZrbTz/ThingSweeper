@@ -7,6 +7,7 @@
 [ext_resource path="res://Grid/GridBlock/GridBlock.gd" type="Script" id=5]
 
 [node name="GridBlock" type="Node2D"]
+scale = Vector2( 0.2, 0.2 )
 script = ExtResource( 5 )
 
 [node name="Back" type="Sprite" parent="."]
@@ -28,9 +29,9 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="Control" type="Control" parent="."]
-margin_left = 3.0
-margin_top = 2.0
-margin_right = 257.0
+margin_left = 1.0
+margin_top = 3.0
+margin_right = 256.0
 margin_bottom = 256.0
 __meta__ = {
 "_edit_use_anchors_": false
