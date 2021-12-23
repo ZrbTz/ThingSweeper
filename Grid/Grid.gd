@@ -5,6 +5,7 @@ export var width: int
 var block_scene = preload("res://Grid/GridBlock/GridBlock.tscn")
 export var max_bombs: int
 var tiles
+signal got_bomb
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,6 +20,7 @@ func draw_grid():
 			add_child(block)
 	tiles = get_children()
 			
+
 func init_bombs():
 	var bombs = 0
 	while bombs < max_bombs:
@@ -27,3 +29,5 @@ func init_bombs():
 			tile.has_bomb = true
 			bombs += 1
 
+func bombed():
+	emit_signal("got_bomb")
