@@ -4,6 +4,7 @@ enum BlockState {COVERED, PRESSED, FLAGGED}
 var state = BlockState.COVERED
 var sprite_size = 256
 var has_bomb: bool = false
+var bomb_counter = 0
 #signal got_bomb
 
 # Called when the node enters the scene tree for the first time.
@@ -21,6 +22,8 @@ func _on_Control_gui_input(event):
 					$Bomb.show()
 #					GameManager.lose()
 					get_parent().bombed()
+				else:
+					$Label.text = str(bomb_counter)
 				state = BlockState.PRESSED
 			if event.is_action_pressed("right_click"):
 				$Flag.show()
