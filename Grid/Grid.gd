@@ -5,12 +5,13 @@ export var width: int
 var block_scene = preload("res://Grid/GridBlock/GridBlock.tscn")
 export var max_bombs: int
 var tiles = {}
+var is_init: bool = false
 signal got_bomb
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	draw_grid()
-	init_bombs()
+#	init_bombs()
 
 func draw_grid():
 	for w in range(width):
@@ -23,7 +24,7 @@ func draw_grid():
 	for b in tiles.values():
 		b.neighbours = map_pos_to_tile(get_neighbours(b.coordinates))
 			
-func init_bombs():
+func init_bombs(first_square):
 	var bombs = 0
 	while bombs < max_bombs:
 		randomize()
@@ -32,11 +33,12 @@ func init_bombs():
 		var rh = abs(randi() % height)
 		var pos = Vector2(rw, rh)
 		var tile = tiles[pos]
-		if not tile.has_bomb:
+		if not tile.has_bomb and not tile in first_square:
 			tile.has_bomb = true
 			bombs += 1
 			add_neighbours(pos)
-			
+		is_init = true
+		
 func add_neighbours(pos):
 	for v2 in get_neighbours(pos):
 		tiles[v2].bomb_counter+=1

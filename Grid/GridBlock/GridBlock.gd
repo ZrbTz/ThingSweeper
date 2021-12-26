@@ -1,6 +1,7 @@
 extends Node2D
 
 enum BlockState {COVERED, PRESSED, FLAGGED}
+var grid: Node
 var state = BlockState.COVERED
 var sprite_size = 256
 var has_bomb: bool = false
@@ -11,7 +12,8 @@ var neighbours: Array
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	assert(get_parent().name == "Grid", true)
+	grid = get_parent()
+	assert(grid.name == "Grid", true)
 	$Bomb.hide()
 	$Flag.hide()
 
@@ -19,6 +21,8 @@ func _on_Control_gui_input(event):
 	match(state):
 		BlockState.COVERED:
 			if event.is_action_pressed("left_click"):
+				if not grid.is_init:
+					grid.init_bombs(neighbours + [self])
 				state = BlockState.PRESSED
 				$Cover.hide()
 				if has_bomb:
