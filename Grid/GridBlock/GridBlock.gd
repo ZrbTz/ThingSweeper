@@ -19,33 +19,42 @@ func _ready():
 	$Flag.hide()
 
 func _on_Control_gui_input(event):
-	match(state):
-		BlockState.COVERED:
-			if event.is_action_pressed("left_click"):
-				if not grid.is_init:
-					grid.init_bombs(neighbours + [self])
-				state = BlockState.PRESSED
-				$Cover.hide()
-				if has_bomb:
-					$Bomb.show()
-#					GameManager.lose()
-					get_parent().bombed()
-				else:
-					uncover()
-			if event.is_action_pressed("right_click"):
-				$Flag.show()
-				state = BlockState.FLAGGED
-		BlockState.FLAGGED:
-			if event.is_action_pressed("right_click"):
-				$Flag.hide()
-				state = BlockState.COVERED
-				
+	if self in GameManager.active_tiles:
+		match(state):
+			BlockState.COVERED:
+				if event.is_action_pressed("left_click"):
+					if not grid.is_init:
+						grid.init_bombs(neighbours + [self])
+					state = BlockState.PRESSED
+					$Cover.hide()
+					if has_bomb:
+						$Bomb.show()
+	#					GameManager.lose()
+						get_parent().bombed()
+					else:
+						uncover()
+				if event.is_action_pressed("right_click"):
+					$Flag.show()
+					state = BlockState.FLAGGED
+			BlockState.FLAGGED:
+				if event.is_action_pressed("right_click"):
+					$Flag.hide()
+					state = BlockState.COVERED
+
+
 func uncover_all():
 	for n in neighbours:
 		if n.state == BlockState.COVERED:
 			if not n.has_bomb:
 				n.uncover()
-			
+
+func highlight():
+	$Cover.self_modulate = Color(0.0, 1.0, 0.0)
+
+func disable_highlight():
+	$Cover.self_modulate = Color(1.0, 1.0, 1.0)
+	
+
 func uncover():
 	state = BlockState.PRESSED
 	$Cover.hide()

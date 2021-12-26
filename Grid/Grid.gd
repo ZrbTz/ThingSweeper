@@ -14,7 +14,12 @@ signal got_bomb
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	draw_grid()
+	init_grid()
 #	init_bombs()
+
+func init_grid():
+	init_bombs(tiles[Vector2.ZERO].neighbours)
+	tiles[Vector2.ZERO].uncover()
 
 func draw_grid():
 	for w in range(width):

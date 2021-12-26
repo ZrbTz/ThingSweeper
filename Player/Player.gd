@@ -5,6 +5,8 @@ var input_vector: Vector2
 var block_size: int = 256
 var Grid: Node2D
 
+signal player_moved(position)
+
 func _ready():
 	Grid = GameManager.Grid
 	grid_pos = Vector2.ZERO
@@ -20,6 +22,7 @@ func handle_movements():
 	if Grid.can_move_to(new_pos):
 		grid_pos = new_pos
 		position = new_pos * Grid.block_size * Grid.block_scale
+		emit_signal("player_moved", grid_pos)
 
 func get_input_vector():
 	input_vector.x = int(Input.is_action_just_pressed("ui_right")) - int(Input.is_action_just_pressed("ui_left"))
