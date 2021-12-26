@@ -1,4 +1,5 @@
 extends Node2D
+class_name GridBlock
 
 enum BlockState {COVERED, PRESSED, FLAGGED}
 var grid: Node

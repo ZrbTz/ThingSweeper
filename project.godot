@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "GridBlock",
+"language": "GDScript",
+"path": "res://Grid/GridBlock/GridBlock.gd"
+} ]
+_global_script_class_icons={
+"GridBlock": ""
+}
+
 [application]
 
 config/name="ThingSweeper"

@@ -2,8 +2,11 @@ extends Node2D
 
 export var height: int 
 export var width: int 
+export var block_scale: float =  0.2
+var block_size = 256
 var block_scene = preload("res://Grid/GridBlock/GridBlock.tscn")
 export var max_bombs: int
+
 var tiles = {}
 var is_init: bool = false
 signal got_bomb
@@ -17,7 +20,7 @@ func draw_grid():
 	for w in range(width):
 		for h in range(height):
 			var block = block_scene.instance()
-			block.position = block.scale*block.sprite_size*Vector2(w, h)
+			block.position = block_scale*block_size*Vector2(w, h)
 			block.coordinates = Vector2(w, h)
 			add_child(block)
 			tiles[Vector2(w, h)] = block
@@ -60,6 +63,11 @@ func map_pos_to_tile(pos_list):
 		tile_list.append(tiles[pos])
 	return tile_list
 			
+
+func can_move_to(tile_pos: Vector2) -> bool:
+	if(not tile_pos in tiles.keys()):
+		return false
+	return tiles[tile_pos].state == GridBlock.BlockState.PRESSED
 
 func bombed():
 	emit_signal("got_bomb")
